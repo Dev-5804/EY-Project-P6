@@ -8,7 +8,7 @@ const Nav = () => {
       <div>
         <div className="absolute h-[70vh] inset-0 bg-black/50">
           <div className="flex justify-around">
-            <h1 className="text-2xl font-bold text-white">ShareRecp</h1>
+            <h1 className="text-2xl font-bold text-white">RecpShare</h1>
               <ul className="gap-10 pt-2 font-bold hidden sm:flex">
                 <li>
                   <Link to="/" className="text-white">Home</Link>
