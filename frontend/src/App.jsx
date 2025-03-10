@@ -1,27 +1,57 @@
-// import React from 'react'
-// import Footer from "./components/Footer";
-// import Nav from "./components/Nav";
-// import Fooditems from "./section/Fooditems";
-// import Button from "./components/Button";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import About from "./pages/About";
-import Login from "./pages/Getstarted";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
+import { useState, useEffect } from "react";
+import Navbar from "./components/Navbar";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Feed from "./pages/Feed";
 import Home from "./pages/Home";
-import Signup from "./pages/Signup";
+import Account from "./pages/Account";
+import "./App.css";
 
-const App = () => {
+function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    // Check if user is logged in
+    const user = localStorage.getItem("username");
+    setIsLoggedIn(!!user);
+  }, []);
+
   return (
     <Router>
+      <Navbar isLoggedIn={isLoggedIn} />
       <Routes>
-        <Route path="/" element={<Home />}></Route>
-        <Route path="/About" element={<About />}></Route>
-        <Route path="/Login" element={<Login />}></Route>
-        <Route path="/signup" element={<Signup/>}></Route>
-        {/* <Route path="/Signup" element={<Getstarted />}></Route> */}
+        <Route path="/" element={<Home />} />
+        <Route
+          path="/login"
+          element={<Login setIsLoggedIn={setIsLoggedIn} />}
+        />
+        <Route
+          path="/register"
+          element={<Register setIsLoggedIn={setIsLoggedIn} />}
+        />
+        <Route path="./pages/home" element={<Home />} />
+        <Route path="./pages/feed" element={<Feed />} />
+
+        {/* Protected Account Route - Redirect to Login if not logged in */}
+        <Route
+          path="/account"
+          element={
+            isLoggedIn ? (
+              <Account setIsLoggedIn={setIsLoggedIn} />
+            ) : (
+              <Navigate to="/login" />
+            )
+          }
+        />
       </Routes>
-      {/* <Button path={"src/pages/Login.jsx"}>HI</Button> */}
     </Router>
   );
-};
+}
 
 export default App;
